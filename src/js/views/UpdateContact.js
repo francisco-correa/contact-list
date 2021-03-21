@@ -1,34 +1,52 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { Context } from "../store/appContext";
 
-export const AddContact = () => {
+import { Context } from "../store/appContext.js";
+
+export function UpdateContact() {
+	const params = useParams();
+
 	const { store, actions } = useContext(Context);
+
 	const [fullName, setFullName] = useState("");
 	const [email, setEmail] = useState("");
 	const [phone, setPhone] = useState("");
 	const [address, setAddress] = useState("");
 
-	const SaveContact = event => {
+	useEffect(() => {
+		actions.getContact(params.id);
+	}, []);
+
+	useEffect(() => {
+		setFullName(store.contact.full_name);
+		setPhone(store.contact.phone);
+		setEmail(store.contact.email);
+		setAddress(store.contact.address);
+	}, [store.contact]);
+
+	const UpdateContact = event => {
 		const newContact = {
 			full_name: fullName,
-			email: email,
 			phone: phone,
-			address: address
-			// agenda_slug: store.user
+			email: email,
+			address: address,
+			agenda_slug: store.user
 		};
 
-		actions.createNewContact(newContact);
-		alert("New contact has been successfully created");
+		actions.updateContact(params.id, newContact);
+
+		alert("Contact successfully updated");
 		setFullName("");
-		setEmail("");
 		setPhone("");
+		setEmail("");
 		setAddress("");
 	};
+
 	return (
 		<div className="container">
 			<div>
-				<h1 className="text-center mt-5">Add a new contact</h1>
+				<h1 className="text-center mt-5">Update a new contact</h1>
 				<form>
 					<div className="form-group">
 						<label>Full Name</label>
@@ -70,14 +88,16 @@ export const AddContact = () => {
 							value={address}
 						/>
 					</div>
-					<button type="button" className="btn btn-primary form-control" onClick={SaveContact}>
-						Save New Contact
-					</button>
+					<Link to="/">
+						<button type="button" className="btn btn-primary form-control" onClick={UpdateContact}>
+							Update
+						</button>
+					</Link>
 					<Link className="mt-3 w-100 text-center" to="/">
-						Back to contacts
+						Get Back To Contacts
 					</Link>
 				</form>
 			</div>
 		</div>
 	);
-};
+}
