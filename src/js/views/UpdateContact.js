@@ -1,38 +1,38 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext.js";
 
 export function UpdateContact() {
-	const params = useParams();
+	// const params = useParams();
 
 	const { store, actions } = useContext(Context);
-	const [fullName, setFullName] = useState("");
+	const [full_name, setFullName] = useState("");
 	const [email, setEmail] = useState("");
 	const [phone, setPhone] = useState("");
 	const [address, setAddress] = useState("");
 
 	useEffect(() => {
-		actions.getContact(params.id);
+		actions.getContact();
 	}, []);
 
-	useEffect(() => {
-		setFullName(store.contact.full_name);
-		setPhone(store.contact.phone);
-		setEmail(store.contact.email);
-		setAddress(store.contact.address);
-	}, [store.contact]);
+	// useEffect(() => {
+	// 	setFullName(store.contact.full_name);
+	// 	setPhone(store.contact.phone);
+	// 	setEmail(store.contact.email);
+	// 	setAddress(store.contact.address);
+	// }, [store.contact]);
 
 	const handleSubmit = e => {
 		const newContact = {
-			full_name: fullName,
+			full_name: full_name,
 			phone: phone,
 			email: email,
 			address: address,
-			agenda_slug: store.user
+			agenda_slug: "panchoCorrea"
 		};
 
-		actions.updateContact(params.id, newContact);
+		actions.updateContact(newContact);
 
 		alert("Contact successfully updated");
 		setFullName("");
@@ -54,7 +54,7 @@ export function UpdateContact() {
 							placeholder="Full Name"
 							name="fullName"
 							onChange={e => setFullName(e.target.value)}
-							value={fullName}
+							value={full_name}
 						/>
 					</div>
 					<div className="form-group">

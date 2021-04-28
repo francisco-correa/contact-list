@@ -1,13 +1,16 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
-// import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import MikePhoto from "../../img/m101.jpg";
 
 export const ContactCard = props => {
-	// const [state, setState] = useState({});
 	const { actions } = useContext(Context);
+	console.log(props.id);
+	console.log(props.full_name);
+	console.log(props.email);
+	console.log(props.address);
+	console.log(props.phone);
 
 	return (
 		<li className="list-group-item">
@@ -22,11 +25,11 @@ export const ContactCard = props => {
 								<i className="fas fa-pencil-alt mr-3" />
 							</button>
 						</Link>
-						<button className="btn" onClick={() => actions.deleteContact()}>
+						<button className="btn" onClick={() => actions.deleteContact(props.id)}>
 							<i className="fas fa-trash-alt" />
 						</button>
 					</div>
-					<label className="name lead">{props.name}</label>
+					<label className="name lead">{props.full_name}</label>
 					<br />
 					<i className="fas fa-map-marker-alt text-muted mr-3" />
 					<span className="text-muted">{props.address}</span>
@@ -59,11 +62,11 @@ export const ContactCard = props => {
 ContactCard.propTypes = {
 	history: PropTypes.object,
 	deleteContact: PropTypes.func,
-	name: PropTypes.string,
+	id: PropTypes.string,
+	full_name: PropTypes.string,
 	address: PropTypes.string,
 	phone: PropTypes.string,
-	email: PropTypes.string,
-	id: PropTypes.string
+	email: PropTypes.string
 };
 
 /**

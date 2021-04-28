@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const AddContact = () => {
-	const { store, actions } = useContext(Context);
-	const [fullName, setFullName] = useState("");
+	const { actions } = useContext(Context);
+	const [full_name, setFullName] = useState("");
 	const [email, setEmail] = useState("");
 	const [phone, setPhone] = useState("");
 	const [address, setAddress] = useState("");
@@ -12,11 +12,11 @@ export const AddContact = () => {
 	const handleSubmit = e => {
 		e.preventDefault();
 		const newContact = {
-			fullName: fullName,
+			full_name: full_name,
 			email: email,
 			phone: phone,
 			address: address,
-			agenda_slug: store.user
+			agenda_slug: "panchoCorrea"
 		};
 
 		actions.createNewContact(newContact);
@@ -36,10 +36,10 @@ export const AddContact = () => {
 						<input
 							type="text"
 							className="form-control"
-							name="fullName"
+							name="full_name"
 							placeholder="Full Name"
 							onChange={e => setFullName(e.target.value)}
-							value={fullName}
+							value={full_name}
 						/>
 					</div>
 					<div className="form-group">
