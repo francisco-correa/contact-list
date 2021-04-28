@@ -1,14 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-
 import { Context } from "../store/appContext.js";
 
 export function UpdateContact() {
 	const params = useParams();
 
 	const { store, actions } = useContext(Context);
-
 	const [fullName, setFullName] = useState("");
 	const [email, setEmail] = useState("");
 	const [phone, setPhone] = useState("");
@@ -25,7 +23,7 @@ export function UpdateContact() {
 		setAddress(store.contact.address);
 	}, [store.contact]);
 
-	const UpdateContact = event => {
+	const handleSubmit = e => {
 		const newContact = {
 			full_name: fullName,
 			phone: phone,
@@ -54,7 +52,8 @@ export function UpdateContact() {
 							type="text"
 							className="form-control"
 							placeholder="Full Name"
-							onChange={event => setFullName(event.target.value)}
+							name="fullName"
+							onChange={e => setFullName(e.target.value)}
 							value={fullName}
 						/>
 					</div>
@@ -64,7 +63,8 @@ export function UpdateContact() {
 							type="email"
 							className="form-control"
 							placeholder="Enter email"
-							onChange={event => setEmail(event.target.value)}
+							name="email"
+							onChange={e => setEmail(e.target.value)}
 							value={email}
 						/>
 					</div>
@@ -74,7 +74,8 @@ export function UpdateContact() {
 							type="phone"
 							className="form-control"
 							placeholder="Enter phone"
-							onChange={event => setPhone(event.target.value)}
+							name="phone"
+							onChange={e => setPhone(e.target.value)}
 							value={phone}
 						/>
 					</div>
@@ -84,12 +85,13 @@ export function UpdateContact() {
 							type="text"
 							className="form-control"
 							placeholder="Enter address"
-							onChange={event => setAddress(event.target.value)}
+							name="address"
+							onChange={e => setAddress(e.target.value)}
 							value={address}
 						/>
 					</div>
 					<Link to="/">
-						<button type="button" className="btn btn-primary form-control" onClick={UpdateContact}>
+						<button type="button" className="btn btn-primary form-control" onClick={handleSubmit}>
 							Update
 						</button>
 					</Link>

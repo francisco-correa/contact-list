@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext.js";
 import { ContactCard } from "../component/ContactCard.js";
@@ -6,8 +6,8 @@ import { Modal } from "../component/Modal";
 
 export const Contacts = () => {
 	const [state, setState] = useState({
-		showModal: false
-		// contact: {}
+		showModal: false,
+		contact: {}
 	});
 
 	const { store, actions } = useContext(Context);
@@ -29,7 +29,7 @@ export const Contacts = () => {
 						{store.agenda.map((elem, index) => {
 							return (
 								<ContactCard
-									// deleteContact={() => setState({ showModal: true, contact: elem })}
+									deleteContact={() => setState({ showModal: true })}
 									key={index}
 									Name={elem.full_name}
 									Email={elem.email}

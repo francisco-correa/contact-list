@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 // import { withRouter } from "react-router-dom";
@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import MikePhoto from "../../img/m101.jpg";
 
 export const ContactCard = props => {
-	const [state, setState] = useState({});
+	// const [state, setState] = useState({});
 	const { actions } = useContext(Context);
 
 	return (
@@ -24,7 +24,6 @@ export const ContactCard = props => {
 						</Link>
 						<button className="btn" onClick={() => actions.deleteContact()}>
 							<i className="fas fa-trash-alt" />
-							{/* <i id={props.id} className="fas fa-trash-alt" /> */}
 						</button>
 					</div>
 					<label className="name lead">{props.name}</label>

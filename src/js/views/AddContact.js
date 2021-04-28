@@ -9,13 +9,14 @@ export const AddContact = () => {
 	const [phone, setPhone] = useState("");
 	const [address, setAddress] = useState("");
 
-	const SaveContact = event => {
+	const handleSubmit = e => {
+		e.preventDefault();
 		const newContact = {
-			full_name: fullName,
+			fullName: fullName,
 			email: email,
 			phone: phone,
-			address: address
-			// agenda_slug: store.user
+			address: address,
+			agenda_slug: store.user
 		};
 
 		actions.createNewContact(newContact);
@@ -35,8 +36,9 @@ export const AddContact = () => {
 						<input
 							type="text"
 							className="form-control"
+							name="fullName"
 							placeholder="Full Name"
-							onChange={event => setFullName(event.target.value)}
+							onChange={e => setFullName(e.target.value)}
 							value={fullName}
 						/>
 					</div>
@@ -45,8 +47,9 @@ export const AddContact = () => {
 						<input
 							type="email"
 							className="form-control"
+							name="email"
 							placeholder="Enter email"
-							onChange={event => setEmail(event.target.value)}
+							onChange={e => setEmail(e.target.value)}
 							value={email}
 						/>
 					</div>
@@ -55,8 +58,9 @@ export const AddContact = () => {
 						<input
 							type="phone"
 							className="form-control"
+							name="phone"
 							placeholder="Enter phone"
-							onChange={event => setPhone(event.target.value)}
+							onChange={e => setPhone(e.target.value)}
 							value={phone}
 						/>
 					</div>
@@ -65,12 +69,13 @@ export const AddContact = () => {
 						<input
 							type="text"
 							className="form-control"
+							name="address"
 							placeholder="Enter address"
-							onChange={event => setAddress(event.target.value)}
+							onChange={e => setAddress(e.target.value)}
 							value={address}
 						/>
 					</div>
-					<button type="button" className="btn btn-primary form-control" onClick={SaveContact}>
+					<button type="button" className="btn btn-primary form-control" onClick={handleSubmit}>
 						Save New Contact
 					</button>
 					<Link className="mt-3 w-100 text-center" to="/">
