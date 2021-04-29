@@ -8,17 +8,19 @@ export function UpdateOneContact(props) {
 	const { store, actions } = useContext(Context);
 
 	let id = props.match.params.id;
-	let contact = store.contact[props.match.params];
-	const [fullName, setFullName] = useState(contact ? contact.full_name : "");
-	const [email, setEmail] = useState(contact ? contact.email : "");
-	const [phone, setPhone] = useState(contact ? contact.phone : "");
-	const [address, setAddress] = useState(contact ? contact.address : "");
+	const [fullName, setFullName] = useState(store.contact ? store.contact.full_name : "");
+	const [email, setEmail] = useState(store.contact ? store.contact.email : "");
+	const [phone, setPhone] = useState(store.contact ? store.contact.phone : "");
+	const [address, setAddress] = useState(store.contact ? store.contact.address : "");
+
+	useEffect(() => {
+		actions.getContact(id);
+	}, []);
 
 	const handleSubmit = e => {
 		e.preventDefault();
 		actions.updateContact(id, fullName, email, phone, address);
-		console.log(id, "<--soy el id");
-		console.log(fullName, "<--soy el name");
+		console.log(id, "<--i-am-the-id");
 
 		const ShowAlert = Swal.mixin({
 			toast: true,

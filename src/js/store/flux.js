@@ -72,6 +72,7 @@ const getState = ({ getStore, setStore, getActions }) => {
 					})
 					.then(data => {
 						console.log(data, "<--get-one-contact");
+						setStore({ contact: data });
 					});
 			},
 

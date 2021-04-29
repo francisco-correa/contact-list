@@ -11,7 +11,7 @@ export const Modal = props => {
 	const { store, actions } = useContext(Context);
 
 	const handleClick = () => {
-		actions.deleteContact(props.id);
+		actions.deleteContact(props.id, props.history);
 		props.onClose;
 	};
 	return (

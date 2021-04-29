@@ -1,8 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { Context } from "../store/appContext.js";
 import { ContactCard } from "../component/ContactCard.js";
 import { Modal } from "../component/Modal";
+import { Footer } from "../component/footer";
 
 export const Contacts = () => {
 	const [state, setState] = useState({
@@ -11,6 +12,7 @@ export const Contacts = () => {
 	});
 
 	const { store, actions } = useContext(Context);
+	const [redirect, setRedirect] = useState();
 
 	useEffect(() => {
 		actions.getAgenda();
@@ -18,6 +20,7 @@ export const Contacts = () => {
 
 	return (
 		<div className="container">
+			{redirect ? <Redirect to="/add" /> : ""}
 			<div>
 				<p className="text-right my-3">
 					<Link className="btn btn-success" to="/add">
@@ -29,8 +32,9 @@ export const Contacts = () => {
 						{store.agenda.map((contact, index) => {
 							return (
 								<ContactCard
-									onDelete={() => setState({ showModal: true, id: contact.id })}
+									onDelete={() => setState({ showModal: true })}
 									key={index}
+									setRedirect={setRedirect}
 									full_name={contact.full_name}
 									email={contact.email}
 									phone={contact.phone}
@@ -42,7 +46,8 @@ export const Contacts = () => {
 					</ul>
 				</div>
 			</div>
-			<Modal show={state.showModal} id={state.id} onClose={() => setState({ showModal: false })} />
+			<Modal show={state.showModal} onClose={() => setState({ showModal: false })} />
+			<Footer></Footer>
 		</div>
 	);
 };
