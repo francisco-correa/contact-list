@@ -2,30 +2,42 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext.js";
 import PropTypes from "prop-types";
+import Swal from "sweetalert2";
 
 export function UpdateOneContact(props) {
 	const { store, actions } = useContext(Context);
 
 	let id = props.match.params.id;
 	let contact = store.contact[props.match.params];
-	const [phone, setPhone] = useState(contact ? contact.phone : "");
 	const [fullName, setFullName] = useState(contact ? contact.full_name : "");
 	const [email, setEmail] = useState(contact ? contact.email : "");
+	const [phone, setPhone] = useState(contact ? contact.phone : "");
 	const [address, setAddress] = useState(contact ? contact.address : "");
-
-	useEffect(() => {
-		actions.getContact();
-	}, []);
 
 	const handleSubmit = e => {
 		e.preventDefault();
 		actions.updateContact(id, fullName, email, phone, address);
-		console.log(store.contact);
 		console.log(id, "<--soy el id");
 		console.log(fullName, "<--soy el name");
-		console.log(phone, "<--soy el phone");
-		console.log(email, "<--soy el email");
-		console.log(address, "<--soy el address");
+
+		const ShowAlert = Swal.mixin({
+			toast: true,
+			position: "bottom",
+			showConfirmButton: true,
+			confirmButtonColor: "#EEAA7B",
+			cancelButtonText: "Ok",
+			timer: 4000,
+			timerProgressBar: true,
+			didOpen: toast => {
+				toast.addEventListener("mouseenter", Swal.stopTimer);
+				toast.addEventListener("mouseleave", Swal.resumeTimer);
+			}
+		});
+
+		ShowAlert.fire({
+			icon: "info",
+			title: "contact has been updated."
+		});
 	};
 
 	return (

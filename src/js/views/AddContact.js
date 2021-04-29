@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
+import Swal from "sweetalert2";
 
 export const AddContact = () => {
 	const { actions } = useContext(Context);
@@ -20,7 +21,24 @@ export const AddContact = () => {
 		};
 
 		actions.createNewContact(newContact);
-		// alert("New contact has been successfully created");
+		const ShowAlert = Swal.mixin({
+			toast: true,
+			position: "bottom",
+			showConfirmButton: true,
+			confirmButtonColor: "#EEAA7B",
+			cancelButtonText: "Ok",
+			timer: 4000,
+			timerProgressBar: true,
+			didOpen: toast => {
+				toast.addEventListener("mouseenter", Swal.stopTimer);
+				toast.addEventListener("mouseleave", Swal.resumeTimer);
+			}
+		});
+
+		ShowAlert.fire({
+			icon: "success",
+			title: "contact successfully added."
+		});
 	};
 	return (
 		<div className="container">

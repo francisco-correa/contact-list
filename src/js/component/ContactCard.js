@@ -3,11 +3,35 @@ import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import PropTypes from "prop-types";
 import MikePhoto from "../../img/m101.jpg";
+import Swal from "sweetalert2";
 
 export const ContactCard = props => {
 	const { actions } = useContext(Context);
 	console.log(props.full_name);
 
+	const handleSubmit = e => {
+		e.preventDefault();
+		actions.deleteContact(props.id);
+
+		const ShowAlert = Swal.mixin({
+			toast: true,
+			position: "bottom",
+			showConfirmButton: true,
+			confirmButtonColor: "#EEAA7B",
+			cancelButtonText: "Ok",
+			timer: 4000,
+			timerProgressBar: true,
+			didOpen: toast => {
+				toast.addEventListener("mouseenter", Swal.stopTimer);
+				toast.addEventListener("mouseleave", Swal.resumeTimer);
+			}
+		});
+
+		ShowAlert.fire({
+			icon: "warning",
+			title: "contact has been deleted."
+		});
+	};
 	return (
 		<li className="list-group-item">
 			<div className="row w-100">
@@ -21,7 +45,7 @@ export const ContactCard = props => {
 								<i className="fas fa-pencil-alt mr-3" />
 							</button>
 						</Link>
-						<button className="btn" onClick={() => actions.deleteContact(props.id)}>
+						<button className="btn" onClick={handleSubmit}>
 							<i className="fas fa-trash-alt" />
 						</button>
 					</div>

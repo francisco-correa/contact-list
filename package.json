@@ -78,7 +78,8 @@
 		"react-dom": "^16.13.1",
 		"react-polyfills": "0.0.1",
 		"react-router": "^4.3.1",
-		"react-router-dom": "^4.3.1"
+		"react-router-dom": "^4.3.1",
+		"sweetalert2": "^10.16.6"
 	},
 	"resolutions": {
 		"minimist": "^1.2.5",
