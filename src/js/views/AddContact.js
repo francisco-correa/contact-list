@@ -4,7 +4,7 @@ import { Context } from "../store/appContext";
 
 export const AddContact = () => {
 	const { actions } = useContext(Context);
-	const [full_name, setFullName] = useState("");
+	const [fullName, setFullName] = useState("");
 	const [email, setEmail] = useState("");
 	const [phone, setPhone] = useState("");
 	const [address, setAddress] = useState("");
@@ -12,7 +12,7 @@ export const AddContact = () => {
 	const handleSubmit = e => {
 		e.preventDefault();
 		const newContact = {
-			full_name: full_name,
+			full_name: fullName,
 			email: email,
 			phone: phone,
 			address: address,
@@ -20,11 +20,7 @@ export const AddContact = () => {
 		};
 
 		actions.createNewContact(newContact);
-		alert("New contact has been successfully created");
-		setFullName("");
-		setEmail("");
-		setPhone("");
-		setAddress("");
+		// alert("New contact has been successfully created");
 	};
 	return (
 		<div className="container">
@@ -36,10 +32,10 @@ export const AddContact = () => {
 						<input
 							type="text"
 							className="form-control"
-							name="full_name"
+							name="fullName"
 							placeholder="Full Name"
 							onChange={e => setFullName(e.target.value)}
-							value={full_name}
+							value={fullName}
 						/>
 					</div>
 					<div className="form-group">

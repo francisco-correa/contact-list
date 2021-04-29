@@ -1,44 +1,31 @@
 import React, { useState, useEffect, useContext } from "react";
-// import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext.js";
+import PropTypes from "prop-types";
 
-export function UpdateContact() {
-	// const params = useParams();
-
+export function UpdateOneContact(props) {
 	const { store, actions } = useContext(Context);
-	const [full_name, setFullName] = useState("");
-	const [email, setEmail] = useState("");
-	const [phone, setPhone] = useState("");
-	const [address, setAddress] = useState("");
+
+	let id = props.match.params.id;
+	let contact = store.contact[props.match.params];
+	const [phone, setPhone] = useState(contact ? contact.phone : "");
+	const [fullName, setFullName] = useState(contact ? contact.full_name : "");
+	const [email, setEmail] = useState(contact ? contact.email : "");
+	const [address, setAddress] = useState(contact ? contact.address : "");
 
 	useEffect(() => {
 		actions.getContact();
 	}, []);
 
-	// useEffect(() => {
-	// 	setFullName(store.contact.full_name);
-	// 	setPhone(store.contact.phone);
-	// 	setEmail(store.contact.email);
-	// 	setAddress(store.contact.address);
-	// }, [store.contact]);
-
 	const handleSubmit = e => {
-		const newContact = {
-			full_name: full_name,
-			phone: phone,
-			email: email,
-			address: address,
-			agenda_slug: "panchoCorrea"
-		};
-
-		actions.updateContact(newContact);
-
-		alert("Contact successfully updated");
-		setFullName("");
-		setPhone("");
-		setEmail("");
-		setAddress("");
+		e.preventDefault();
+		actions.updateContact(id, fullName, email, phone, address);
+		console.log(store.contact);
+		console.log(id, "<--soy el id");
+		console.log(fullName, "<--soy el name");
+		console.log(phone, "<--soy el phone");
+		console.log(email, "<--soy el email");
+		console.log(address, "<--soy el address");
 	};
 
 	return (
@@ -54,7 +41,7 @@ export function UpdateContact() {
 							placeholder="Full Name"
 							name="fullName"
 							onChange={e => setFullName(e.target.value)}
-							value={full_name}
+							value={fullName}
 						/>
 					</div>
 					<div className="form-group">
@@ -103,3 +90,7 @@ export function UpdateContact() {
 		</div>
 	);
 }
+
+UpdateOneContact.propTypes = {
+	match: PropTypes.object
+};

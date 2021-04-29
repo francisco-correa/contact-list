@@ -6,11 +6,7 @@ import MikePhoto from "../../img/m101.jpg";
 
 export const ContactCard = props => {
 	const { actions } = useContext(Context);
-	console.log(props.id);
 	console.log(props.full_name);
-	console.log(props.email);
-	console.log(props.address);
-	console.log(props.phone);
 
 	return (
 		<li className="list-group-item">

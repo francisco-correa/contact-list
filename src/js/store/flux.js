@@ -5,12 +5,25 @@ const getState = ({ getStore, setStore, getActions }) => {
 			contact: {
 				full_name: "",
 				email: "",
-				agenda_slug: "panchoCorrea",
+				phone: "",
 				address: "",
-				phone: ""
+				agenda_slug: "panchoCorrea"
 			}
 		},
 		actions: {
+			getAllContacts: () => {
+				fetch("https://assets.breatheco.de/apis/fake/contact/agenda/", {
+					method: "GET",
+					headers: { "Content-type": "application/json" }
+				})
+					.then(response => response.json())
+					.then(data => {
+						setStore({ agenda: data });
+						console.log(data, "<--full all contacts");
+					})
+					.catch(error => console.log(error));
+			},
+
 			getAgenda: () => {
 				fetch("https://assets.breatheco.de/apis/fake/contact/agenda/panchoCorrea", {
 					method: "GET",
@@ -29,9 +42,9 @@ const getState = ({ getStore, setStore, getActions }) => {
 				const contactList = {
 					full_name: contact.full_name,
 					email: contact.email,
-					agenda_slug: "panchoCorrea",
+					phone: contact.phone,
 					address: contact.address,
-					phone: contact.phone
+					agenda_slug: "panchoCorrea"
 				};
 				fetch("https://assets.breatheco.de/apis/fake/contact/", {
 					method: "POST",
@@ -45,35 +58,11 @@ const getState = ({ getStore, setStore, getActions }) => {
 					})
 					.then(data => {
 						console.log(data, "<--new-contact-data");
-						// getActions().getAllContacts();
-					});
-			},
-
-			getAllContacts: () => {
-				const store = getStore();
-				fetch("https://assets.breatheco.de/apis/fake/contact/agenda/panchoCorrea", {
-					method: "GET",
-					headers: {
-						"Content-Type": "application/json"
-					}
-				})
-					.then(response => {
-						return response.json();
-					})
-					.then(data => {
-						console.log(data, "<--agenda-name");
-						setStore({
-							agenda: data
-						});
-					})
-
-					.catch(error => {
-						console.log(error);
 					});
 			},
 
 			getContact: id => {
-				fetch(`https://assets.breatheco.de/apis/fake/contact/${id}`, {
+				fetch("https://assets.breatheco.de/apis/fake/contact/" + id, {
 					method: "GET",
 					settings: {
 						"Content-Type": "application/json"
@@ -82,34 +71,36 @@ const getState = ({ getStore, setStore, getActions }) => {
 					.then(response => {
 						return response.json();
 					})
-					.then(json => {
-						console.log(json);
+					.then(data => {
 						setStore({
-							contact: json
+							contact: data
 						});
+						console.log(data, "<--get-one-contact");
 					});
 			},
 
-			updateContact: id => {
+			updateContact: (id, full_name, email, phone, address) => {
 				const contactListUpdate = {
-					full_name: id.full_name,
-					email: id.email,
-					agenda_slug: "panchoCorrea",
-					address: id.address,
-					phone: id.phone
+					full_name: full_name,
+					email: email,
+					phone: phone,
+					address: address,
+					agenda_slug: "panchoCorrea"
 				};
-				fetch(`https://assets.breatheco.de/apis/fake/contact/${id}`, {
+				fetch("https://assets.breatheco.de/apis/fake/contact/" + id, {
 					method: "PUT",
 					body: JSON.stringify(contactListUpdate),
 					settings: {
 						"Content-Type": "application/json"
 					}
 				})
-					.then(response => {
-						return response.json();
-					})
-					.then(data => {
-						console.log(data, "<--update-contact-data");
+					.then(() => {
+						fetch("https://assets.breatheco.de/apis/fake/contact/agenda/panchoCorrea")
+							.then(response => response.json())
+							.then(data => {
+								console.log(data, "update-agenda");
+								setStore({ agenda: data });
+							});
 					})
 					.catch(error => {
 						console.log(error);
@@ -117,7 +108,6 @@ const getState = ({ getStore, setStore, getActions }) => {
 			},
 
 			deleteContact: id => {
-				// const store = getStore();
 				fetch(`https://assets.breatheco.de/apis/fake/contact/${id}`, {
 					method: "DELETE",
 					settings: {
@@ -127,8 +117,8 @@ const getState = ({ getStore, setStore, getActions }) => {
 					.then(response => {
 						return response.json();
 					})
-					.then(json => {
-						console.log(json, "soy un json");
+					.then(data => {
+						console.log(data, "<--delete one contact");
 					})
 					.catch(error => {
 						console.log(error);

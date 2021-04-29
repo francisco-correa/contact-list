@@ -7,8 +7,9 @@ import { Modal } from "../component/Modal";
 export const Contacts = () => {
 	const [state, setState] = useState({
 		showModal: false,
-		contact: {}
+		id: null
 	});
+
 	const { store, actions } = useContext(Context);
 
 	useEffect(() => {
@@ -28,9 +29,9 @@ export const Contacts = () => {
 						{store.agenda.map((contact, index) => {
 							return (
 								<ContactCard
-									deleteContact={() => setState({ showModal: true })}
+									onDelete={() => setState({ showModal: true, id: contact.id })}
 									key={index}
-									name={contact.full_name}
+									full_name={contact.full_name}
 									email={contact.email}
 									phone={contact.phone}
 									address={contact.address}
@@ -41,7 +42,7 @@ export const Contacts = () => {
 					</ul>
 				</div>
 			</div>
-			<Modal show={state.showModal} onClose={() => setState({ showModal: false })} />
+			<Modal show={state.showModal} id={state.id} onClose={() => setState({ showModal: false })} />
 		</div>
 	);
 };
