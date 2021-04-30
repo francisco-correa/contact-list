@@ -1,3 +1,52 @@
+## Contact List Management
+
+Agenda de contactos que permite realizar diferentes funcionalidades con el método CRUD, la agenda de llama **panchoCorrea**
+
+## *GET*
+* Obtener agenda completa
+* https://assets.breatheco.de/apis/fake/contact/agenda/
+
+* Obtener una agenda particular
+* https://assets.breatheco.de/apis/fake/contact/agenda/panchoCorrea
+
+* Obtener el id de un contacto específico
+* https://assets.breatheco.de/apis/fake/contact/id
+
+
+## *POST*
+* Crear un nuevo contacto
+* https://assets.breatheco.de/apis/fake/contact/
+* Body
+```javascript
+	Body {
+					full_name: Francisco Correa,
+					email: fcorrea.fernandez@gmail.com,
+					phone: 923456789,
+					address: Hola 123,
+					agenda_slug: "panchoCorrea"
+				};
+```
+
+## *PUT*
+* Actualizar un nuevo contacto por medio de su "id"
+* https://assets.breatheco.de/apis/fake/contact/id
+
+```javascript
+	Body {
+					full_name: Francisco Correa,
+					email: fcorrea.fernandez@gmail.com,
+					phone: 923456789,
+					address: Hola 123,
+					agenda_slug: "panchoCorrea"
+				};
+```
+
+## *DELETE*
+* Eliminar un contacto por medio de su "id"
+* https://assets.breatheco.de/apis/fake/contact/${id}
+
+______________________________________________________________________
+
 # ![alt text](https://assets.breatheco.de/apis/img/images.php?blob&random&cat=icon&tags=breathecode,32) Contact Managment Application
 
 Tecnologías: HTML, CSS, JS, React, React Router and Context.
